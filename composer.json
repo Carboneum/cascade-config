@@ -1,0 +1,27 @@
+{
+  "name": "carboneum/cascade-config",
+  "type": "library",
+  "description": "Library for implement flexible configuration.",
+  "homepage": "http://github.com/carboneum/cascade-config",
+  "license": "MIT",
+  "authors": [],
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/carboneum/nested-state"
+    }
+  ],
+  "require": {
+    "php": ">=5.5.0",
+    "carboneum/nested-state": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~5.0"
+  },
+  "autoload": {
+    "psr-0": {
+      "Carboneum\\CascadeConfig\\": "src",
+      "CarboneumTest\\CascadeConfig\\": "tests"
+    }
+  }
+}
