@@ -3,8 +3,10 @@
 namespace Carboneum\CascadeConfig\Domain;
 
 use Carboneum\CascadeConfig\Exception\SpaceException\SpaceNotDefinedException;
+use Carboneum\CascadeConfig\Model\ImmutableSettingsSpace;
 use Carboneum\CascadeConfig\Model\SettingsSpaceInterface;
 use Carboneum\CascadeConfig\Model\SourceInterface;
+use Carboneum\CascadeConfig\Model\StateDependantInterface;
 use Carboneum\NestedState\State;
 
 /**
@@ -22,6 +24,11 @@ class ConfigurationService
      * @var SettingsSpaceInterface[]
      */
     protected $settingsSpaces = [];
+
+    /**
+     * @var array
+     */
+    protected $immutableSettingsSpaces = [];
 
     /**
      * @param SourceInterface[] $sources
@@ -44,7 +51,11 @@ class ConfigurationService
             throw new SpaceNotDefinedException($name);
         }
 
-        return $this->settingsSpaces[$name];
+        if (!isset($this->immutableSettingsSpaces[$name])) {
+            $this->immutableSettingsSpaces[$name] = new ImmutableSettingsSpace($this->settingsSpaces[$name]);
+        }
+
+        return $this->immutableSettingsSpaces[$name];
     }
 
     /**
@@ -53,7 +64,7 @@ class ConfigurationService
     public function scanConfigs()
     {
         foreach ($this->sources as $source) {
-            foreach ($source->scanConfigs() as $space) {
+            foreach ($source->scanSettingsSpaces() as $space) {
                 $this->settingsSpaces[$space->getName()] = $space;
             }
         }
@@ -68,8 +79,10 @@ class ConfigurationService
      */
     public function applyState(State $state)
     {
-        foreach($this->settingsSpaces as $space) {
-            $space->applyState($state);
+        foreach ($this->settingsSpaces as $space) {
+            if ($space instanceof StateDependantInterface) {
+                $space->applyState($state);
+            }
         }
 
         return $this;

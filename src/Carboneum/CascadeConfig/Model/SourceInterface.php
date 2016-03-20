@@ -30,5 +30,5 @@ interface SourceInterface
      *
      * @return SettingsSpaceInterface[] List of found spaces
      */
-    public function scanConfigs();
+    public function scanSettingsSpaces();
 }

@@ -2,8 +2,6 @@
 
 namespace Carboneum\CascadeConfig\Model;
 
-use Carboneum\NestedState\State;
-
 /**
  * Interface ParametersSpaceInterface
  * @package Carboneum\CascadeConfig
@@ -13,7 +11,7 @@ interface SettingsSpaceInterface
     /**
      * @return array
      */
-    public function getArray();
+    public function getAll();
 
     /**
      * @param string $name
@@ -25,10 +23,4 @@ interface SettingsSpaceInterface
      * @return string
      */
     public function getName();
-
-    /**
-     * @param State $state
-     * @return $this
-     */
-    public function applyState(State $state);
 }
