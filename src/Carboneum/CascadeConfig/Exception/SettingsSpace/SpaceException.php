@@ -14,15 +14,31 @@ class SpaceException extends CascadeConfigException
     /**
      * @var string
      */
-    protected $space;
+    protected $spaceName;
 
     /**
-     * @param string $space
+     * @param string $spaceName
      * @param \Exception $previous
      */
-    public function __construct($space, \Exception $previous = null)
+    public function __construct($spaceName, \Exception $previous = null)
     {
-        $this->space = $space;
-        parent::__construct(sprintf(static::MESSAGE, $space), self::CODE, $previous);
+        $this->spaceName = $spaceName;
+        parent::__construct($this->formatMessage(), self::CODE, $previous);
+    }
+
+    /**
+     * @return string
+     */
+    public function getSpaceName()
+    {
+        return $this->spaceName;
+    }
+
+    /**
+     * @return string
+     */
+    protected function formatMessage()
+    {
+        return sprintf(static::MESSAGE, $this->spaceName);
     }
 }

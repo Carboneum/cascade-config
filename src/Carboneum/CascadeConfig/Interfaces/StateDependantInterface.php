@@ -1,6 +1,6 @@
 <?php
 
-namespace Carboneum\CascadeConfig\Model;
+namespace Carboneum\CascadeConfig\Interfaces;
 
 use Carboneum\NestedState\Interfaces\ReadableStateInterface;
 

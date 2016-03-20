@@ -2,12 +2,14 @@
 
 namespace Carboneum\CascadeConfig\Domain;
 
+use Carboneum\CascadeConfig\Exception\ConfigurationException\InvalidSourceException;
+use Carboneum\CascadeConfig\Exception\ConfigurationException\StateIsNotDefined;
 use Carboneum\CascadeConfig\Exception\SpaceException\SpaceNotDefinedException;
 use Carboneum\CascadeConfig\Model\ImmutableSettingsSpace;
-use Carboneum\CascadeConfig\Model\SettingsSpaceInterface;
-use Carboneum\CascadeConfig\Model\SourceInterface;
-use Carboneum\CascadeConfig\Model\StateDependantInterface;
-use Carboneum\NestedState\State;
+use Carboneum\CascadeConfig\Interfaces\SettingsSpaceInterface;
+use Carboneum\CascadeConfig\Interfaces\SourceInterface;
+use Carboneum\CascadeConfig\Interfaces\StateDependantInterface;
+use Carboneum\NestedState\Interfaces\ReadableStateInterface;
 
 /**
  * Class ConfigurationService
@@ -16,9 +18,19 @@ use Carboneum\NestedState\State;
 class ConfigurationService
 {
     /**
+     * @var ReadableStateInterface
+     */
+    protected $state;
+
+    /**
      * @var SourceInterface[]
      */
     protected $sources = [];
+
+    /**
+     * @var array
+     */
+    protected $spacesToSourcesMap;
 
     /**
      * @var SettingsSpaceInterface[]
@@ -26,9 +38,14 @@ class ConfigurationService
     protected $settingsSpaces = [];
 
     /**
-     * @var array
+     * @var ImmutableSettingsSpace[]
      */
-    protected $immutableSettingsSpaces = [];
+    protected $immutableSpaces = [];
+
+    /**
+     * @var StateDependantInterface[]
+     */
+    protected $stateDependant = [];
 
     /**
      * @param SourceInterface[] $sources
@@ -36,6 +53,7 @@ class ConfigurationService
     public function __construct(array $sources)
     {
         $this->sources = $sources;
+        $this->indexSources($this->sources);
     }
 
     /**
@@ -47,44 +65,96 @@ class ConfigurationService
      */
     public function getSettingsSpace($name)
     {
-        if (!isset($this->settingsSpaces[$name])) {
+        if (!isset($this->spacesToSourcesMap[$name])) {
             throw new SpaceNotDefinedException($name);
         }
 
-        if (!isset($this->immutableSettingsSpaces[$name])) {
-            $this->immutableSettingsSpaces[$name] = new ImmutableSettingsSpace($this->settingsSpaces[$name]);
+        if (!isset($this->settingsSpaces[$name])) { // not loaded
+            $this->loadSettingsSpace($name);
         }
 
-        return $this->immutableSettingsSpaces[$name];
+        return $this->immutableSpaces[$name];
     }
 
     /**
-     * @return $this
-     */
-    public function scanConfigs()
-    {
-        foreach ($this->sources as $source) {
-            foreach ($source->scanSettingsSpaces() as $space) {
-                $this->settingsSpaces[$space->getName()] = $space;
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param State $state
+     * @param ReadableStateInterface $state
      *
      * @return $this
      */
-    public function applyState(State $state)
+    public function setState(ReadableStateInterface $state)
     {
-        foreach ($this->settingsSpaces as $space) {
-            if ($space instanceof StateDependantInterface) {
-                $space->setState($state);
-            }
+        $this->state = $state;
+
+        foreach ($this->stateDependant as $space) {
+            $space->setState($this->state);
         }
 
         return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function triggerStateChange()
+    {
+        foreach ($this->stateDependant as $space) {
+            $space->triggerStateChange();
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param array $sources
+     * @throws InvalidSourceException
+     */
+    protected function indexSources(array $sources)
+    {
+        foreach ($sources as $key => $source) {
+            if (!is_object($source) && !$source instanceof SourceInterface) {
+                throw new InvalidSourceException();
+            }
+
+            $spaceNames = $source->getSettingsSpacesNames();
+            $this->spacesToSourcesMap = array_merge(
+                $this->spacesToSourcesMap,
+                array_combine($spaceNames, array_fill(0, count($spaceNames), $key))
+            );
+        }
+    }
+
+    /**
+     * @param string $name
+     * @throws \Exception
+     */
+    protected function loadSettingsSpace($name)
+    {
+        $space = $this->sources[$this->spacesToSourcesMap[$name]]->getSettingsSpace($name);
+
+        if ($space instanceof StateDependantInterface) {
+            $space->setState($this->getState());
+            $this->stateDependant[] = $space;
+        }
+
+        $this->settingsSpaces[$name] = $space;
+        $this->immutableSpaces[$name] = new ImmutableSettingsSpace($space);
+
+        if (!isset($this->immutableSpaces[$name])) {
+            $this->immutableSpaces[$name] = $this->settingsSpaces[$name];
+        }
+    }
+
+    /**
+     * @return ReadableStateInterface
+     *
+     * @throws StateIsNotDefined
+     */
+    protected function getState()
+    {
+        if (isset($this->state)) {
+            throw new StateIsNotDefined();
+        }
+
+        return $this->state;
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Carboneum\CascadeConfig\Model;
 
+use Carboneum\CascadeConfig\Interfaces\SettingsSpaceInterface;
+
 class ImmutableSettingsSpace implements SettingsSpaceInterface
 {
     /**
@@ -26,12 +28,12 @@ class ImmutableSettingsSpace implements SettingsSpaceInterface
     }
 
     /**
-     * @param string $name
+     * @param string $key
      * @return mixed
      */
-    public function get($name)
+    public function get($key)
     {
-        return $this->mutable->get($name);
+        return $this->mutable->get($key);
     }
 
     /**
@@ -39,6 +41,6 @@ class ImmutableSettingsSpace implements SettingsSpaceInterface
      */
     public function getName()
     {
-        return $this->getName();
+        return $this->mutable->getName();
     }
 }

@@ -1,6 +1,8 @@
 <?php
 
-namespace Carboneum\CascadeConfig\Model;
+namespace Carboneum\CascadeConfig\Interfaces;
+
+use Carboneum\CascadeConfig\Exception\SettingsSpace\SettingsSpaceKey\SpaceKeyException;
 
 /**
  * Interface ParametersSpaceInterface
@@ -14,10 +16,13 @@ interface SettingsSpaceInterface
     public function getAll();
 
     /**
-     * @param string $name
+     * @param string $key
+     *
+     * @throws SpaceKeyException
+     *
      * @return mixed
      */
-    public function get($name);
+    public function get($key);
 
     /**
      * @return string
