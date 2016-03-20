@@ -2,7 +2,7 @@
 
 namespace Carboneum\CascadeConfig\Interfaces;
 
-use Carboneum\CascadeConfig\Exception\SettingsSpace\SettingsSpaceKey\SpaceKeyException;
+use Carboneum\CascadeConfig\Exception\SettingsSpace\SettingsSpaceKey;
 
 /**
  * Interface ParametersSpaceInterface
@@ -18,7 +18,7 @@ interface SettingsSpaceInterface
     /**
      * @param string $key
      *
-     * @throws SpaceKeyException
+     * @throws SettingsSpaceKey\SpaceKeyException;
      *
      * @return mixed
      */

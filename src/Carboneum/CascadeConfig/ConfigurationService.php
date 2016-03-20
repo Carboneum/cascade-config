@@ -3,12 +3,10 @@
 namespace Carboneum\CascadeConfig;
 
 use Carboneum\CascadeConfig\Exception\ConfigurationException\InvalidSourceException;
-use Carboneum\CascadeConfig\Exception\ConfigurationException\StateIsNotDefined;
 use Carboneum\CascadeConfig\Exception\SettingsSpace\SpaceNotDefinedException;
-use Carboneum\CascadeConfig\Model\ImmutableSettingsSpace;
 use Carboneum\CascadeConfig\Interfaces\SettingsSpaceInterface;
 use Carboneum\CascadeConfig\Interfaces\SourceInterface;
-use Carboneum\CascadeConfig\Interfaces\StateDependantInterface;
+use Carboneum\CascadeConfig\Model\SettingsSpaceCollection;
 use Carboneum\NestedState\Interfaces\ReadableStateInterface;
 
 /**
@@ -33,19 +31,9 @@ class ConfigurationService
     protected $spacesToSourcesMap = [];
 
     /**
-     * @var SettingsSpaceInterface[]
+     * @var SettingsSpaceCollection
      */
-    protected $settingsSpaces = [];
-
-    /**
-     * @var ImmutableSettingsSpace[]
-     */
-    protected $immutableSpaces = [];
-
-    /**
-     * @var StateDependantInterface[]
-     */
-    protected $stateDependant = [];
+    protected $settingsSpaces;
 
     /**
      * @param SourceInterface[] $sources
@@ -54,6 +42,7 @@ class ConfigurationService
     {
         $this->sources = $sources;
         $this->indexSources($this->sources);
+        $this->settingsSpaces = new SettingsSpaceCollection();
     }
 
     /**
@@ -69,11 +58,11 @@ class ConfigurationService
             throw new SpaceNotDefinedException($name);
         }
 
-        if (!isset($this->settingsSpaces[$name])) { // not loaded
+        if (!$this->settingsSpaces->hasSettingSpace($name)) {
             $this->loadSettingsSpace($name);
         }
 
-        return $this->immutableSpaces[$name];
+        return $this->settingsSpaces->getSettingsSpaceImmutable($name);
     }
 
     /**
@@ -83,7 +72,7 @@ class ConfigurationService
      */
     public function setState(ReadableStateInterface $state)
     {
-        $this->state = $state;
+        $this->settingsSpaces->setState($state);
 
         return $this;
     }
@@ -93,9 +82,7 @@ class ConfigurationService
      */
     public function triggerStateChange()
     {
-        foreach ($this->stateDependant as $space) {
-            $space->triggerStateChange();
-        }
+        $this->settingsSpaces->triggerStateChange();
 
         return $this;
     }
@@ -125,28 +112,8 @@ class ConfigurationService
      */
     protected function loadSettingsSpace($name)
     {
-        $space = $this->sources[$this->spacesToSourcesMap[$name]]->getSettingsSpace($name);
-
-        if ($space instanceof StateDependantInterface) {
-            $space->setState($this->getState());
-            $this->stateDependant[] = $space;
-        }
-
-        $this->settingsSpaces[$name] = $space;
-        $this->immutableSpaces[$name] = new ImmutableSettingsSpace($space);
-    }
-
-    /**
-     * @return ReadableStateInterface
-     *
-     * @throws StateIsNotDefined
-     */
-    protected function getState()
-    {
-        if (null === $this->state) {
-            throw new StateIsNotDefined();
-        }
-
-        return $this->state;
+        $this->settingsSpaces->addSettingsSpace(
+            $this->sources[$this->spacesToSourcesMap[$name]]->getSettingsSpace($name)
+        );
     }
 }

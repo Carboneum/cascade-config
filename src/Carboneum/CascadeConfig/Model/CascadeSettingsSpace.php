@@ -111,7 +111,7 @@ class CascadeSettingsSpace implements SettingsSpaceInterface, StateDependantInte
     /**
      * Loads and compiles matching config chunks
      */
-    private function compileConfig()
+    protected function compileConfig()
     {
         $matchedChunksNames = [];
         foreach ($this->chunks as $chunkName => $parameters) {

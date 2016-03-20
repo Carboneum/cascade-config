@@ -4,6 +4,11 @@ namespace Carboneum\CascadeConfig\Exception\SettingsSpace\SettingsSpaceKey;
 
 use Carboneum\CascadeConfig\Exception\SettingsSpace\SpaceException;
 
+/**
+ * Class SpaceKeyException
+ *
+ * @package Carboneum\CascadeConfig
+ */
 class SpaceKeyException extends SpaceException
 {
     const CODE = 110;

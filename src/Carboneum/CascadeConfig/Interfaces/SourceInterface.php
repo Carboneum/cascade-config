@@ -2,7 +2,7 @@
 
 namespace Carboneum\CascadeConfig\Interfaces;
 
-use Carboneum\CascadeConfig\Exception\SpaceException\SpaceNotDefinedException;
+use Carboneum\CascadeConfig\Exception\SettingsSpace\SpaceNotDefinedException;
 
 /**
  * Interface SourceInterface

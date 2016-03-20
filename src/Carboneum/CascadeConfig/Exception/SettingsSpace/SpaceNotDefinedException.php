@@ -4,6 +4,7 @@ namespace Carboneum\CascadeConfig\Exception\SettingsSpace;
 
 /**
  * Class SpaceNotDefinedException
+ *
  * @package Carboneum\CascadeConfig
  */
 class SpaceNotDefinedException extends SpaceException
