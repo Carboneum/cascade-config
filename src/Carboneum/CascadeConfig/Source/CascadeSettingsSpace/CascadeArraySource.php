@@ -4,7 +4,7 @@ namespace Carboneum\CascadeConfig\Source\CascadeSettingsSpace;
 
 use Carboneum\CascadeConfig\Interfaces\CascadeSourceInterface;
 use Carboneum\CascadeConfig\Model\CascadeSettingsSpace;
-use Carboneum\NestedState\State;
+use Carboneum\NestedState\Helper\ParameterSerializer;
 
 class CascadeArraySource implements CascadeSourceInterface
 {
@@ -14,9 +14,9 @@ class CascadeArraySource implements CascadeSourceInterface
     protected $configData;
 
     /**
-     * @var State
+     * @var ParameterSerializer
      */
-    protected $state;
+    protected $serializer;
 
     /**
      * @param array $configData
@@ -24,7 +24,7 @@ class CascadeArraySource implements CascadeSourceInterface
     public function __construct(array $configData)
     {
         $this->configData = $configData;
-        $this->state = new State([]); //@todo change to helper
+        $this->serializer = new ParameterSerializer();
     }
 
     /**
@@ -59,7 +59,7 @@ class CascadeArraySource implements CascadeSourceInterface
     {
         $chunks = [];
         foreach ($chunkNames as $name) {
-            $chunks[$name] = $this->state->getParametersByString($name);
+            $chunks[$name] = $this->serializer->getParametersByString($name);
         };
 
         return $chunks;
