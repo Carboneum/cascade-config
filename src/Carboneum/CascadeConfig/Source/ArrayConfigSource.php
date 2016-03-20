@@ -2,7 +2,7 @@
 
 namespace Carboneum\CascadeConfig\Source;
 
-use Carboneum\CascadeConfig\Configuration\Model\SettingsSpace;
+use Carboneum\CascadeConfig\Model\SettingsSpace;
 use Carboneum\CascadeConfig\Model\SourceInterface;
 use Carboneum\NestedState\State;
 
@@ -38,7 +38,7 @@ class ArrayConfigSource implements SourceInterface
      */
     public function getChunk($configName, $chunkName)
     {
-        $this->configData[$configName][$chunkName];
+        return $this->configData[$configName][$chunkName];
     }
 
     /**
@@ -65,5 +65,7 @@ class ArrayConfigSource implements SourceInterface
         foreach ($chunkNames as $chunkName) {
             $result[$chunkName] = State::getParametersByString($chunkName);
         }
+
+        return $result;
     }
 }

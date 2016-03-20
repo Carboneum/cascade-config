@@ -81,7 +81,7 @@ class ConfigurationService
     {
         foreach ($this->settingsSpaces as $space) {
             if ($space instanceof StateDependantInterface) {
-                $space->applyState($state);
+                $space->setState($state);
             }
         }
 

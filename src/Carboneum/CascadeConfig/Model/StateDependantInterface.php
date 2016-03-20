@@ -14,5 +14,10 @@ interface StateDependantInterface
      * @param ReadableStateInterface $state
      * @return $this
      */
-    public function applyState(ReadableStateInterface $state);
+    public function setState(ReadableStateInterface $state);
+
+    /**
+     * @return $this
+     */
+    public function triggerStateChange();
 }

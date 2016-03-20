@@ -1,10 +1,7 @@
 <?php
 
-namespace Carboneum\CascadeConfig\Configuration\Model;
+namespace Carboneum\CascadeConfig\Model;
 
-use Carboneum\CascadeConfig\Model\SettingsSpaceInterface;
-use Carboneum\CascadeConfig\Model\SourceInterface;
-use Carboneum\CascadeConfig\Model\StateDependantInterface;
 use Carboneum\NestedState\Interfaces\ReadableStateInterface;
 
 class SettingsSpace implements SettingsSpaceInterface, StateDependantInterface
@@ -80,10 +77,21 @@ class SettingsSpace implements SettingsSpaceInterface, StateDependantInterface
      *
      * @return $this
      */
-    public function applyState(ReadableStateInterface $state)
+    public function setState(ReadableStateInterface $state)
     {
         $this->state = $state;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function triggerStateChange()
+    {
         $this->compiledConfig = null;
+
+        return $this;
     }
 
     /**
@@ -106,7 +114,10 @@ class SettingsSpace implements SettingsSpaceInterface, StateDependantInterface
         asort($matchedChunksNames);
 
         foreach (array_keys($matchedChunksNames) as $chunkName) {
-            $this->compiledConfig = array_merge($this->source->getChunk($this->name, $chunkName));
+            $this->compiledConfig = array_merge(
+                $this->compiledConfig,
+                $this->source->getChunk($this->name, $chunkName)
+            );
         }
     }
 }

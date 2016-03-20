@@ -16,12 +16,13 @@
     "carboneum/nested-state": "~1.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "~5.0"
+    "phpunit/phpunit": "*",
+    "codeclimate/php-test-reporter": "*"
   },
   "autoload": {
     "psr-0": {
       "Carboneum\\CascadeConfig\\": "src",
-      "CarboneumTest\\CascadeConfig\\": "tests"
+      "CarboneumTest\\CascadeConfig\\": "test"
     }
   }
 }
