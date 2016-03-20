@@ -1,8 +1,6 @@
 <?php
 
-namespace Carboneum\CascadeConfig\Exception\SpaceException;
-
-use Carboneum\CascadeConfig\Exception\SpaceException;
+namespace Carboneum\CascadeConfig\Exception\SettingsSpace;
 
 /**
  * Class SpaceNotDefinedException

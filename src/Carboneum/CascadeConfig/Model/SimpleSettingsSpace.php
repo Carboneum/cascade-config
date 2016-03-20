@@ -60,6 +60,6 @@ class SimpleSettingsSpace implements SettingsSpaceInterface
      */
     public function getName()
     {
-        $this->name;
+        return $this->name;
     }
 }

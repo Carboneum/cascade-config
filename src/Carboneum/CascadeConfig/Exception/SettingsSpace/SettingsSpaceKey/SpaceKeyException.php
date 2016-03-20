@@ -2,7 +2,7 @@
 
 namespace Carboneum\CascadeConfig\Exception\SettingsSpace\SettingsSpaceKey;
 
-use Carboneum\CascadeConfig\Exception\SpaceException;
+use Carboneum\CascadeConfig\Exception\SettingsSpace\SpaceException;
 
 class SpaceKeyException extends SpaceException
 {

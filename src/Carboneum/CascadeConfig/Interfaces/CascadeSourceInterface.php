@@ -1,8 +1,6 @@
 <?php
 
-namespace Carboneum\CascadeConfig\Carboneum\CascadeConfig\Interfaces;
-
-use Carboneum\CascadeConfig\Interfaces\SourceInterface;
+namespace Carboneum\CascadeConfig\Interfaces;
 
 /**
  * Interface CascadeSourceInterface

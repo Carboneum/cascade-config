@@ -2,13 +2,12 @@
 
 namespace CarboneumTest\CascadeConfig\Model;
 
+use Carboneum\CascadeConfig\Exception\SettingsSpace\SettingsSpaceKey\SpaceKeyMissingException;
 use Carboneum\CascadeConfig\Model\ImmutableSettingsSpace;
-use Carboneum\CascadeConfig\Model\SettingsSpace;
-use Carboneum\CascadeConfig\Source\ArrayConfigSource;
-use Carboneum\NestedState\ImmutableState;
+use Carboneum\CascadeConfig\Source\CascadeSettingsSpace\CascadeArraySource;
 use Carboneum\NestedState\State;
 
-class SettingsSpaceTest extends \PHPUnit_Framework_TestCase
+class CascadeSettingsSpaceTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @param array $settings
@@ -19,11 +18,16 @@ class SettingsSpaceTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetAllConfig(array $settings, array $stateParams, array $expectedConfig)
     {
-
-        $settings = new SettingsSpace(new ArrayConfigSource(['test' => $settings]), 'test');
+        $settings = (new CascadeArraySource(['settings' => $settings]))->getSettingsSpace('settings');
         $settings->setState(new State($stateParams));
 
         $this->assertEquals($expectedConfig, $settings->getAll());
+
+        foreach ($expectedConfig as $key => $value) {
+            $this->assertEquals($value, $settings->get($key));
+        }
+
+        $this->assertEquals('settings', $settings->getName());
     }
 
     /**
@@ -79,10 +83,11 @@ class SettingsSpaceTest extends \PHPUnit_Framework_TestCase
         array $expectedConfigBefore,
         array $expectedConfigAfter
     ) {
-        $state = new State($stateParams);
 
-        $settings = new SettingsSpace(new ArrayConfigSource(['test' => $settings]), 'test');
+        $settings = (new CascadeArraySource(['settings' => $settings]))->getSettingsSpace('settings');
         $settingsImmutable = new ImmutableSettingsSpace($settings);
+
+        $state = new State($stateParams);
         $settings->setState($state);
 
         $this->assertEquals($expectedConfigBefore, $settings->getAll());
@@ -133,5 +138,29 @@ class SettingsSpaceTest extends \PHPUnit_Framework_TestCase
                 ]
             ]
         ];
+    }
+
+    /**
+     * @expectedException \Carboneum\CascadeConfig\Exception\SettingsSpace\SettingsSpaceKey\SpaceKeyMissingException
+     */
+    public function testException()
+    {
+        $source = new CascadeArraySource(
+            [
+                'settings' => [
+                    'foo=olo' => [
+                        'baz' => 10
+                    ],
+                    'foo=bar' => [
+                        'bar' => 20
+                    ]
+                ]
+            ]
+        );
+
+        $settings = $source->getSettingsSpace('settings');
+        $settings->setState(new State(['foo' => 'bar']));
+
+        $settings->get('baz');
     }
 }

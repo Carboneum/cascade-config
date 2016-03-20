@@ -1,8 +1,8 @@
 <?php
 
-namespace Carboneum\CascadeConfig\Carboneum\CascadeConfig\Source\CascadeSettingsSpace;
+namespace Carboneum\CascadeConfig\Source\CascadeSettingsSpace;
 
-use Carboneum\CascadeConfig\Carboneum\CascadeConfig\Interfaces\CascadeSourceInterface;
+use Carboneum\CascadeConfig\Interfaces\CascadeSourceInterface;
 use Carboneum\CascadeConfig\Model\CascadeSettingsSpace;
 use Carboneum\NestedState\State;
 
@@ -32,7 +32,7 @@ class CascadeArraySource implements CascadeSourceInterface
      */
     public function getSettingsSpace($name)
     {
-        return new CascadeSettingsSpace($name, $this, $this->createChunks($this->configData[$name]));
+        return new CascadeSettingsSpace($name, $this, $this->createChunks(array_keys($this->configData[$name])));
     }
 
     /**

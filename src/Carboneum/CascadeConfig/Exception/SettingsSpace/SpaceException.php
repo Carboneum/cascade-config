@@ -1,6 +1,8 @@
 <?php
 
-namespace Carboneum\CascadeConfig\Exception;
+namespace Carboneum\CascadeConfig\Exception\SettingsSpace;
+
+use Carboneum\CascadeConfig\Exception\CascadeConfigException;
 
 /**
  * Class SpaceException

@@ -1,10 +1,10 @@
 <?php
 
-namespace Carboneum\CascadeConfig\Domain;
+namespace Carboneum\CascadeConfig;
 
 use Carboneum\CascadeConfig\Exception\ConfigurationException\InvalidSourceException;
 use Carboneum\CascadeConfig\Exception\ConfigurationException\StateIsNotDefined;
-use Carboneum\CascadeConfig\Exception\SpaceException\SpaceNotDefinedException;
+use Carboneum\CascadeConfig\Exception\SettingsSpace\SpaceNotDefinedException;
 use Carboneum\CascadeConfig\Model\ImmutableSettingsSpace;
 use Carboneum\CascadeConfig\Interfaces\SettingsSpaceInterface;
 use Carboneum\CascadeConfig\Interfaces\SourceInterface;
@@ -30,7 +30,7 @@ class ConfigurationService
     /**
      * @var array
      */
-    protected $spacesToSourcesMap;
+    protected $spacesToSourcesMap = [];
 
     /**
      * @var SettingsSpaceInterface[]
@@ -85,10 +85,6 @@ class ConfigurationService
     {
         $this->state = $state;
 
-        foreach ($this->stateDependant as $space) {
-            $space->setState($this->state);
-        }
-
         return $this;
     }
 
@@ -138,10 +134,6 @@ class ConfigurationService
 
         $this->settingsSpaces[$name] = $space;
         $this->immutableSpaces[$name] = new ImmutableSettingsSpace($space);
-
-        if (!isset($this->immutableSpaces[$name])) {
-            $this->immutableSpaces[$name] = $this->settingsSpaces[$name];
-        }
     }
 
     /**
@@ -151,7 +143,7 @@ class ConfigurationService
      */
     protected function getState()
     {
-        if (isset($this->state)) {
+        if (null === $this->state) {
             throw new StateIsNotDefined();
         }
 

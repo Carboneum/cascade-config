@@ -2,7 +2,8 @@
 
 namespace Carboneum\CascadeConfig\Model;
 
-use Carboneum\CascadeConfig\Carboneum\CascadeConfig\Interfaces\CascadeSourceInterface;
+use Carboneum\CascadeConfig\Exception\SettingsSpace\SettingsSpaceKey\SpaceKeyMissingException;
+use Carboneum\CascadeConfig\Interfaces\CascadeSourceInterface;
 use Carboneum\CascadeConfig\Interfaces\SettingsSpaceInterface;
 use Carboneum\CascadeConfig\Interfaces\StateDependantInterface;
 use Carboneum\NestedState\Interfaces\ReadableStateInterface;
@@ -43,7 +44,6 @@ class CascadeSettingsSpace implements SettingsSpaceInterface, StateDependantInte
      */
     protected $chunks;
 
-
     /**
      * @param string $name
      * @param CascadeSourceInterface $source
@@ -81,7 +81,11 @@ class CascadeSettingsSpace implements SettingsSpaceInterface, StateDependantInte
      */
     public function get($key)
     {
-        return $this->getAll()[$key];
+        if (!isset($this->compiledConfig[$key])) {
+            throw new SpaceKeyMissingException($key, $this->getName());
+        }
+
+        return $this->compiledConfig[$key];
     }
 
     /**
@@ -125,5 +129,7 @@ class CascadeSettingsSpace implements SettingsSpaceInterface, StateDependantInte
                 $this->source->getChunk($this->name, $chunkName)
             );
         }
+
+        $this->isConfigCompiled = true;
     }
 }
