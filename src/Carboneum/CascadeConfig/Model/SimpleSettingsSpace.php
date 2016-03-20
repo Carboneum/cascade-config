@@ -22,6 +22,16 @@ class SimpleSettingsSpace implements SettingsSpaceInterface
     protected $settings = [];
 
     /**
+     * @param string $name
+     * @param array $settings
+     */
+    public function __construct($name, array $settings)
+    {
+        $this->name = $name;
+        $this->settings = $settings;
+    }
+
+    /**
      * @return array
      */
     public function getAll()

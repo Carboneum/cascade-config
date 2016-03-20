@@ -2,14 +2,26 @@
 
 namespace Carboneum\CascadeConfig\Model;
 
+use Carboneum\CascadeConfig\Carboneum\CascadeConfig\Interfaces\CascadeSourceInterface;
+use Carboneum\CascadeConfig\Interfaces\SettingsSpaceInterface;
+use Carboneum\CascadeConfig\Interfaces\StateDependantInterface;
 use Carboneum\NestedState\Interfaces\ReadableStateInterface;
 
-class SettingsSpace implements SettingsSpaceInterface, StateDependantInterface
+/**
+ * Class CascadeSettingsSpace
+ * @package Carboneum\CascadeConfig
+ */
+class CascadeSettingsSpace implements SettingsSpaceInterface, StateDependantInterface
 {
     /**
-     * @var SourceInterface
+     * @var CascadeSourceInterface
      */
     protected $source;
+
+    /**
+     * @var ReadableStateInterface
+     */
+    protected $state;
 
     /**
      * @var string
@@ -19,32 +31,33 @@ class SettingsSpace implements SettingsSpaceInterface, StateDependantInterface
     /**
      * @var array
      */
-    protected $compiledConfig = null;
+    protected $compiledConfig = [];
 
     /**
-     * @var ReadableStateInterface
+     * @var bool
      */
-    protected $state;
+    protected $isConfigCompiled = false;
 
     /**
-     * @var array|null
+     * @var array
      */
     protected $chunks;
 
+
     /**
-     * @param SourceInterface $source
      * @param string $name
-     * @param array|null $chunks
+     * @param CascadeSourceInterface $source
+     * @param array $chunks
      */
-    public function __construct(SourceInterface $source, $name, $chunks = null)
+    public function __construct($name, CascadeSourceInterface $source, $chunks)
     {
-        $this->source = $source;
         $this->name = $name;
+        $this->source = $source;
         $this->chunks = $chunks;
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getName()
     {
@@ -52,11 +65,11 @@ class SettingsSpace implements SettingsSpaceInterface, StateDependantInterface
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
     public function getAll()
     {
-        if (null === $this->compiledConfig) {
+        if (false === $this->isConfigCompiled) {
             $this->compileConfig();
         }
 
@@ -64,18 +77,15 @@ class SettingsSpace implements SettingsSpaceInterface, StateDependantInterface
     }
 
     /**
-     * @param string $name
-     * @return mixed
+     * @inheritdoc
      */
-    public function get($name)
+    public function get($key)
     {
-        return $this->getAll()[$name];
+        return $this->getAll()[$key];
     }
 
     /**
-     * @param ReadableStateInterface $state
-     *
-     * @return $this
+     * @inheritdoc
      */
     public function setState(ReadableStateInterface $state)
     {
@@ -85,11 +95,11 @@ class SettingsSpace implements SettingsSpaceInterface, StateDependantInterface
     }
 
     /**
-     * @return $this
+     * @inheritdoc
      */
     public function triggerStateChange()
     {
-        $this->compiledConfig = null;
+        $this->isConfigCompiled = false;
 
         return $this;
     }
@@ -99,10 +109,6 @@ class SettingsSpace implements SettingsSpaceInterface, StateDependantInterface
      */
     private function compileConfig()
     {
-        if (null === $this->chunks) {
-            $this->chunks = $this->source->getChunksForName($this->name);
-        }
-
         $matchedChunksNames = [];
         foreach ($this->chunks as $chunkName => $parameters) {
             if (false !== ($weight = $this->state->getMatchWeight($parameters))) {
@@ -110,9 +116,9 @@ class SettingsSpace implements SettingsSpaceInterface, StateDependantInterface
             }
         }
 
-        $this->compiledConfig = [];
         asort($matchedChunksNames);
 
+        $this->compiledConfig = [];
         foreach (array_keys($matchedChunksNames) as $chunkName) {
             $this->compiledConfig = array_merge(
                 $this->compiledConfig,
