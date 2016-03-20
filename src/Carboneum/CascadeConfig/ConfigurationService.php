@@ -2,8 +2,10 @@
 
 namespace Carboneum\CascadeConfig\Domain;
 
-use Carboneum\CascadeConfig\Model\ParametersSpaceInterface;
+use Carboneum\CascadeConfig\Exception\SpaceException\SpaceNotDefinedException;
+use Carboneum\CascadeConfig\Model\SettingsSpaceInterface;
 use Carboneum\CascadeConfig\Model\SourceInterface;
+use Carboneum\NestedState\State;
 
 /**
  * Class ConfigurationService
@@ -14,15 +16,14 @@ class ConfigurationService
     /**
      * @var SourceInterface[]
      */
-    protected $sources;
+    protected $sources = [];
 
     /**
-     * @var ParametersSpaceInterface[]
+     * @var SettingsSpaceInterface[]
      */
-    protected $spaces;
+    protected $settingsSpaces = [];
 
     /**
-     * ConfigurationService constructor.
      * @param SourceInterface[] $sources
      */
     public function __construct(array $sources)
@@ -33,11 +34,17 @@ class ConfigurationService
     /**
      * @param string $name
      *
-     * @return ParametersSpaceInterface
+     * @throws SpaceNotDefinedException
+     *
+     * @return SettingsSpaceInterface
      */
-    public function getParametersSpace($name)
+    public function getSettingsSpace($name)
     {
-        return $this->spaces[$name];
+        if (!isset($this->settingsSpaces[$name])) {
+            throw new SpaceNotDefinedException($name);
+        }
+
+        return $this->settingsSpaces[$name];
     }
 
     /**
@@ -46,10 +53,23 @@ class ConfigurationService
     public function scanConfigs()
     {
         foreach ($this->sources as $source) {
-            /** @var ParametersSpaceInterface $space */
             foreach ($source->scanConfigs() as $space) {
-                $this->spaces[$space->getName()] = $space;
+                $this->settingsSpaces[$space->getName()] = $space;
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param State $state
+     *
+     * @return $this
+     */
+    public function applyState(State $state)
+    {
+        foreach($this->settingsSpaces as $space) {
+            $space->applyState($state);
         }
 
         return $this;

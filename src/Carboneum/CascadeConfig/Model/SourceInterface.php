@@ -28,7 +28,7 @@ interface SourceInterface
     /**
      * Find defined configuration names in location
      *
-     * @return ParametersSpaceInterface[] List of found spaces
+     * @return SettingsSpaceInterface[] List of found spaces
      */
     public function scanConfigs();
 }

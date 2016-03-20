@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Carboneum\CascadeConfig\Model;
 
 use Carboneum\NestedState\State;
@@ -9,7 +8,7 @@ use Carboneum\NestedState\State;
  * Interface ParametersSpaceInterface
  * @package Carboneum\CascadeConfig
  */
-interface ParametersSpaceInterface
+interface SettingsSpaceInterface
 {
     /**
      * @return array
