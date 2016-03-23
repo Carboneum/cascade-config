@@ -2,7 +2,7 @@
 
 namespace Carboneum\CascadeConfig\Model;
 
-use Carboneum\CascadeConfig\Exception\ConfigurationException\StateIsNotDefined;
+use Carboneum\CascadeConfig\Exception\Configuration\StateIsNotDefined;
 use Carboneum\CascadeConfig\Interfaces\SettingsSpaceInterface;
 use Carboneum\CascadeConfig\Interfaces\StateDependantInterface;
 use Carboneum\NestedState\Interfaces\ReadableStateInterface;

@@ -6,6 +6,10 @@ use Carboneum\CascadeConfig\Interfaces\CascadeSourceInterface;
 use Carboneum\CascadeConfig\Model\CascadeSettingsSpace;
 use Carboneum\NestedState\Helper\ParameterSerializer;
 
+/**
+ * Class CascadeArraySource
+ * @package Carboneum\CascadeConfig
+ */
 class CascadeArraySource implements CascadeSourceInterface
 {
     /**

@@ -151,7 +151,7 @@ class ConfigurationServiceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Carboneum\CascadeConfig\Exception\ConfigurationException\InvalidSourceException
+     * @expectedException \Carboneum\CascadeConfig\Exception\Configuration\InvalidSourceException
      */
     public function testInvalidSourceException()
     {
@@ -176,7 +176,7 @@ class ConfigurationServiceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Carboneum\CascadeConfig\Exception\ConfigurationException\StateIsNotDefined
+     * @expectedException \Carboneum\CascadeConfig\Exception\Configuration\StateIsNotDefined
      */
     public function testStateIsNotDefined()
     {

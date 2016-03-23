@@ -1,6 +1,6 @@
 <?php
 
-namespace Carboneum\CascadeConfig\Exception\ConfigurationException;
+namespace Carboneum\CascadeConfig\Exception\Configuration;
 
 use Carboneum\CascadeConfig\Exception\CascadeConfigException;
 

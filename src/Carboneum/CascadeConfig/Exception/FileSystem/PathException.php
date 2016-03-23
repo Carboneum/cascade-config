@@ -1,22 +1,18 @@
 <?php
 
-namespace Carboneum\CascadeConfig\Exception\SettingsSpace;
+namespace Carboneum\CascadeConfig\Exception\FileSystem;
 
 use Carboneum\CascadeConfig\Exception\CascadeConfigException;
 
-/**
- * Class SpaceException
- * @package Carboneum\CascadeConfig
- */
-class SpaceException extends CascadeConfigException
+class PathException extends CascadeConfigException
 {
-    const CODE = 100;
-    const MESSAGE = 'Error with space %s';
+    const CODE = 300;
+    const MESSAGE = 'Error with file %s';
 
     /**
      * @var string
      */
-    protected $spaceName;
+    protected $filePath;
 
     /**
      * @param string $filePath
@@ -24,16 +20,16 @@ class SpaceException extends CascadeConfigException
      */
     public function __construct($filePath, \Exception $previous = null)
     {
-        $this->spaceName = $filePath;
+        $this->filePath = $filePath;
         parent::__construct($this->formatMessage(), self::CODE, $previous);
     }
 
     /**
      * @return string
      */
-    public function getSpaceName()
+    public function getFilePath()
     {
-        return $this->spaceName;
+        return $this->filePath;
     }
 
     /**
@@ -41,6 +37,7 @@ class SpaceException extends CascadeConfigException
      */
     protected function formatMessage()
     {
-        return sprintf(static::MESSAGE, $this->spaceName);
+        return sprintf(static::MESSAGE, $this->filePath);
     }
+
 }

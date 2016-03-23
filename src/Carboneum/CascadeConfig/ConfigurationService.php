@@ -2,7 +2,7 @@
 
 namespace Carboneum\CascadeConfig;
 
-use Carboneum\CascadeConfig\Exception\ConfigurationException\InvalidSourceException;
+use Carboneum\CascadeConfig\Exception\Configuration\InvalidSourceException;
 use Carboneum\CascadeConfig\Exception\SettingsSpace\SpaceNotDefinedException;
 use Carboneum\CascadeConfig\Interfaces\SettingsSpaceInterface;
 use Carboneum\CascadeConfig\Interfaces\SourceInterface;
