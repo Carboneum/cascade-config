@@ -95,7 +95,6 @@ class CascadeFileSourceTest extends \PHPUnit_Framework_TestCase
                         'expected' => [
                             'modules/admin/default',
                             'modules/admin/lang=de',
-
                         ],
                     ],
                 ],

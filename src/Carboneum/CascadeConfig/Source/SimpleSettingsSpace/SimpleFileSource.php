@@ -2,8 +2,9 @@
 
 namespace Carboneum\CascadeConfig\Source\SimpleSettingsSpace;
 
+use Carboneum\CascadeConfig\Interfaces\DirectoryFileReaderInterface;
 use Carboneum\CascadeConfig\Interfaces\SourceInterface;
-use Carboneum\CascadeConfig\Service\FileReader;
+use Carboneum\CascadeConfig\Model\SimpleSettingsSpace;
 
 /**
  * Class SimpleFileSource
@@ -12,14 +13,14 @@ use Carboneum\CascadeConfig\Service\FileReader;
 class SimpleFileSource implements SourceInterface
 {
     /**
-     * @var FileReader
+     * @var DirectoryFileReaderInterface
      */
     protected $fileReader;
 
     /**
-     * @param FileReader $fileReader
+     * @param DirectoryFileReaderInterface $fileReader
      */
-    public function __construct(FileReader $fileReader)
+    public function __construct(DirectoryFileReaderInterface $fileReader)
     {
         $this->fileReader = $fileReader;
     }
@@ -29,7 +30,7 @@ class SimpleFileSource implements SourceInterface
      */
     public function getSettingsSpace($name)
     {
-        return $this->fileReader->readFile($name);
+        return new SimpleSettingsSpace($name, $this->fileReader->readFile($name));
     }
 
     /**

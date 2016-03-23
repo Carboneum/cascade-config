@@ -63,19 +63,11 @@ abstract class FileReader implements DirectoryFileReaderInterface
                 throw new FileNotFound($fullCurrentDirectory);
             }
 
-            $files = scandir($fullCurrentDirectory);
-            foreach ($files as $file) {
-                if ('.' === $file || '..' === $file) {
-                    continue;
-                }
+            list($newFiles, $newDirectories) = $this->getFilesAndDirectories($currentDirectory);
 
-                if (is_dir($fullCurrentDirectory . $file)) {
-                    $directories[] = $currentDirectory . $file . DIRECTORY_SEPARATOR;
-                    $directoriesCount++;
-                } elseif (0 === $this->extensionLength || substr($file, -$this->extensionLength) === $this->extension) {
-                    $result[] = substr($currentDirectory, 1) . substr($file, 0, -$this->extensionLength);
-                }
-            }
+            $result = array_merge($result, $newFiles);
+            $directories = array_merge($directories, $newDirectories);
+            $directoriesCount += count($newDirectories);
         }
 
         return $result;
@@ -85,4 +77,29 @@ abstract class FileReader implements DirectoryFileReaderInterface
      * @inheritdoc
      */
     abstract public function readFile($path);
+
+    /**
+     * @param string $currentDirectory
+     * @return array
+     */
+    protected function getFilesAndDirectories($currentDirectory)
+    {
+        $fullCurrentDirectory = $this->path . $currentDirectory;
+        $directoryFiles = scandir($fullCurrentDirectory);
+        $directories = [];
+        $files = [];
+
+        foreach ($directoryFiles as $file) {
+            if ('.' === $file || '..' === $file) {
+                continue;
+            }
+
+            if (is_dir($fullCurrentDirectory . $file)) {
+                $directories[] = $currentDirectory . $file . DIRECTORY_SEPARATOR;
+            } elseif (0 === $this->extensionLength || substr($file, -$this->extensionLength) === $this->extension) {
+                $files[] = substr($currentDirectory, 1) . substr($file, 0, -$this->extensionLength);
+            }
+        }
+        return [$files, $directories];
+    }
 }
