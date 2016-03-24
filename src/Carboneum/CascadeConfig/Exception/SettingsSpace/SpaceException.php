@@ -8,7 +8,7 @@ use Carboneum\CascadeConfig\Exception\CascadeConfigException;
  * Class SpaceException
  * @package Carboneum\CascadeConfig
  */
-class SpaceException extends CascadeConfigException
+abstract class SpaceException extends CascadeConfigException
 {
     const CODE = 100;
     const MESSAGE = 'Error with space %space_name%';

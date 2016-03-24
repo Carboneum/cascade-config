@@ -4,7 +4,7 @@ namespace Carboneum\CascadeConfig\Exception\FileSystem;
 
 use Carboneum\CascadeConfig\Exception\CascadeConfigException;
 
-class PathException extends CascadeConfigException
+abstract class PathException extends CascadeConfigException
 {
     const CODE = 300;
     const MESSAGE = 'Error with file %path%';

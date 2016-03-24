@@ -9,7 +9,7 @@ use Carboneum\CascadeConfig\Exception\SettingsSpace\SpaceException;
  *
  * @package Carboneum\CascadeConfig
  */
-class SpaceKeyException extends SpaceException
+abstract class SpaceKeyException extends SpaceException
 {
     const CODE = 110;
     const MESSAGE = 'Error with key %key_name% of space %space_name%';
