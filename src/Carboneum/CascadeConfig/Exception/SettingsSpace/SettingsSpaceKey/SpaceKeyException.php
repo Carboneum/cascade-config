@@ -23,6 +23,7 @@ class SpaceKeyException extends SpaceException
      */
     public function __construct($keyName, $spaceName, \Exception $previous = null)
     {
-        parent::__construct([self::KEY_NAME => $keyName, self::SPACE_NAME => $spaceName], $previous);
+        $this->setContextValue(self::KEY_NAME, $keyName);
+        parent::__construct($spaceName, $previous);
     }
 }

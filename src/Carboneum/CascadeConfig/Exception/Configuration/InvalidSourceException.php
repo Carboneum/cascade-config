@@ -21,6 +21,7 @@ class InvalidSourceException extends CascadeConfigException
      */
     public function __construct(\Exception $previous = null)
     {
-        parent::__construct([self::INTERFACE_NAME => SourceInterface::class], $previous);
+        $this->setContextValue(self::INTERFACE_NAME, SourceInterface::class);
+        parent::__construct($previous);
     }
 }

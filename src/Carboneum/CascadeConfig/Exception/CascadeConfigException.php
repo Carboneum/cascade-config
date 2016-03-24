@@ -11,16 +11,24 @@ abstract class CascadeConfigException extends \Exception
     const CODE = 0;
     const MESSAGE = 'Error context: %error_context%';
 
-    protected $context = [];
+    private $context = [];
 
     /**
-     * @param array $context
+     *
      * @param \Exception|null $previous
      */
-    public function __construct(array $context = [], \Exception $previous = null)
+    public function __construct(\Exception $previous = null)
     {
-        $this->context = $context;
         parent::__construct($this->formatMessage(), static::CODE, $previous);
+    }
+
+    /**
+     * @param string $name
+     * @param string $value
+     */
+    protected function setContextValue($name, $value)
+    {
+        $this->context[$name] = $value;
     }
 
     /**

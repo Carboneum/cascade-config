@@ -21,6 +21,7 @@ class SpaceException extends CascadeConfigException
      */
     public function __construct($spaceName, \Exception $previous = null)
     {
-        parent::__construct([self::SPACE_NAME => $spaceName], $previous);
+        $this->setContextValue(self::SPACE_NAME, $spaceName);
+        parent::__construct($previous);
     }
 }

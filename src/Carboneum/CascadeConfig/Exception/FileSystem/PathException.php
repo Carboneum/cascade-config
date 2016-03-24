@@ -17,6 +17,7 @@ class PathException extends CascadeConfigException
      */
     public function __construct($spaceName, \Exception $previous = null)
     {
-        parent::__construct([self::FILE_PATH => $spaceName], $previous);
+        $this->setContextValue(self::FILE_PATH, $spaceName);
+        parent::__construct($previous);
     }
 }
