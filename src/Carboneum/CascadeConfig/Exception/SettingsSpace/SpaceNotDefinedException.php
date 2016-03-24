@@ -10,5 +10,5 @@ namespace Carboneum\CascadeConfig\Exception\SettingsSpace;
 class SpaceNotDefinedException extends SpaceException
 {
     const CODE = 101;
-    const MESSAGE = 'Space %s is not defined';
+    const MESSAGE = 'Space %space_name% is not defined';
 }

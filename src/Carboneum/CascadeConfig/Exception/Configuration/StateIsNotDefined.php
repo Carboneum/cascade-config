@@ -10,10 +10,11 @@ class StateIsNotDefined extends CascadeConfigException
     const MESSAGE = 'Trying to access state when it is not defined';
 
     /**
+     * StateIsNotDefined constructor.
      * @param \Exception|null $previous
      */
     public function __construct(\Exception $previous = null)
     {
-        parent::__construct(self::MESSAGE, self::CODE, $previous);
+        parent::__construct([], $previous);
     }
 }

@@ -7,37 +7,16 @@ use Carboneum\CascadeConfig\Exception\CascadeConfigException;
 class PathException extends CascadeConfigException
 {
     const CODE = 300;
-    const MESSAGE = 'Error with file %s';
+    const MESSAGE = 'Error with file %path%';
+
+    const FILE_PATH = '%path%';
 
     /**
-     * @var string
-     */
-    protected $filePath;
-
-    /**
-     * @param string $filePath
+     * @param string $spaceName
      * @param \Exception $previous
      */
-    public function __construct($filePath, \Exception $previous = null)
+    public function __construct($spaceName, \Exception $previous = null)
     {
-        $this->filePath = $filePath;
-        parent::__construct($this->formatMessage(), self::CODE, $previous);
+        parent::__construct([self::FILE_PATH => $spaceName], $previous);
     }
-
-    /**
-     * @return string
-     */
-    public function getFilePath()
-    {
-        return $this->filePath;
-    }
-
-    /**
-     * @return string
-     */
-    protected function formatMessage()
-    {
-        return sprintf(static::MESSAGE, $this->filePath);
-    }
-
 }

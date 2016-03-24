@@ -4,6 +4,6 @@ namespace Carboneum\CascadeConfig\Exception\SettingsSpace\SettingsSpaceKey;
 
 class SpaceKeyMissingException extends SpaceKeyException
 {
-    const CODE = 110;
-    const MESSAGE = 'Key %s of space %s is not defined';
+    const CODE = 111;
+    const MESSAGE = 'Key %key_name% of space %space_name% is not defined';
 }

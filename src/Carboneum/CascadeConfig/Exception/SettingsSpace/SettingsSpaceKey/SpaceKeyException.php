@@ -12,38 +12,17 @@ use Carboneum\CascadeConfig\Exception\SettingsSpace\SpaceException;
 class SpaceKeyException extends SpaceException
 {
     const CODE = 110;
-    const MESSAGE = 'Error with key %s of space %s';
+    const MESSAGE = 'Error with key %key_name% of space %space_name%';
 
-    /**
-     * @var  string
-     */
-    protected $keyName;
+    const KEY_NAME = '%key_name%';
 
     /**
      * @param string $keyName
      * @param string $spaceName
-     *
-     * @param \Exception $previous
+     * @param \Exception|null $previous
      */
     public function __construct($keyName, $spaceName, \Exception $previous = null)
     {
-        $this->keyName = $keyName;
-        parent::__construct($spaceName, $previous);
-    }
-
-    /**
-     * @return string
-     */
-    public function getKeyName()
-    {
-        return $this->keyName;
-    }
-
-    /**
-     * @return string
-     */
-    protected function formatMessage()
-    {
-        return sprintf(static::MESSAGE, $this->keyName, $this->spaceName);
+        parent::__construct([self::KEY_NAME => $keyName, self::SPACE_NAME => $spaceName], $previous);
     }
 }

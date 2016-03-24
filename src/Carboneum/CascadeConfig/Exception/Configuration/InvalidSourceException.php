@@ -12,21 +12,15 @@ use Carboneum\CascadeConfig\Interfaces\SourceInterface;
 class InvalidSourceException extends CascadeConfigException
 {
     const CODE = 201;
-    const MESSAGE = 'Configuration source must implement %';
+    const MESSAGE = 'Configuration source must implement %interface_name%';
+
+    const INTERFACE_NAME = '%interface_name%';
 
     /**
      * @param \Exception|null $previous
      */
     public function __construct(\Exception $previous = null)
     {
-        parent::__construct($this->formatMessage(), self::CODE, $previous);
-    }
-
-    /**
-     * @return string
-     */
-    private function formatMessage()
-    {
-        return sprintf(self::MESSAGE, SourceInterface::class);
+        parent::__construct([self::INTERFACE_NAME => SourceInterface::class], $previous);
     }
 }

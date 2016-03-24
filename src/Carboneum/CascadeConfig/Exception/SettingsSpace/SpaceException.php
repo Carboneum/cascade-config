@@ -11,36 +11,16 @@ use Carboneum\CascadeConfig\Exception\CascadeConfigException;
 class SpaceException extends CascadeConfigException
 {
     const CODE = 100;
-    const MESSAGE = 'Error with space %s';
+    const MESSAGE = 'Error with space %space_name%';
+
+    const SPACE_NAME = '%space_name%';
 
     /**
-     * @var string
-     */
-    protected $spaceName;
-
-    /**
-     * @param string $filePath
+     * @param string $spaceName
      * @param \Exception $previous
      */
-    public function __construct($filePath, \Exception $previous = null)
+    public function __construct($spaceName, \Exception $previous = null)
     {
-        $this->spaceName = $filePath;
-        parent::__construct($this->formatMessage(), self::CODE, $previous);
-    }
-
-    /**
-     * @return string
-     */
-    public function getSpaceName()
-    {
-        return $this->spaceName;
-    }
-
-    /**
-     * @return string
-     */
-    protected function formatMessage()
-    {
-        return sprintf(static::MESSAGE, $this->spaceName);
+        parent::__construct([self::SPACE_NAME => $spaceName], $previous);
     }
 }
