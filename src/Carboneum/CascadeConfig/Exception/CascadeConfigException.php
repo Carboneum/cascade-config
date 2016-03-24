@@ -19,6 +19,7 @@ abstract class CascadeConfigException extends \Exception
      */
     public function __construct(array $context = [], \Exception $previous = null)
     {
+        $this->context = $context;
         parent::__construct($this->formatMessage(), static::CODE, $previous);
     }
 
