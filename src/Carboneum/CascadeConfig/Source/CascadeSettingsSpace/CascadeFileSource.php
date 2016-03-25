@@ -5,7 +5,6 @@ namespace Carboneum\CascadeConfig\Source\CascadeSettingsSpace;
 use Carboneum\CascadeConfig\Interfaces\CascadeSourceInterface;
 use Carboneum\CascadeConfig\Interfaces\DirectoryFileReaderInterface;
 use Carboneum\CascadeConfig\Model\CascadeSettingsSpace;
-use Carboneum\CascadeConfig\Service\FileReader;
 use Carboneum\NestedState\Helper\ParameterSerializer;
 
 /**

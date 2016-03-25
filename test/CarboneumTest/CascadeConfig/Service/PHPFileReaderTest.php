@@ -75,7 +75,7 @@ class PHPFileReaderTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \Carboneum\CascadeConfig\Exception\FileSystem\FileNotFound
      */
-    public function testReadFiletNotFoundException()
+    public function testReadFileNotFoundException()
     {
         $reader = new PHPFileReader($this->getTestFilesRoot() . 'simpleSettings');
         $reader->readFile('notExists');

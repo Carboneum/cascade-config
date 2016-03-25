@@ -3,7 +3,6 @@
 namespace CarboneumTest\CascadeConfig\Source\CascadeSettingsSpace;
 
 use Carboneum\CascadeConfig\Interfaces\DirectoryFileReaderInterface;
-use Carboneum\CascadeConfig\Model\CascadeSettingsSpace;
 use Carboneum\CascadeConfig\Source\CascadeSettingsSpace\CascadeFileSource;
 use Carboneum\NestedState\Interfaces\ReadableStateInterface;
 use Carboneum\NestedState\State;

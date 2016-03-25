@@ -2,7 +2,6 @@
 
 namespace CarboneumTest\CascadeConfig\Model;
 
-use Carboneum\CascadeConfig\Exception\SettingsSpace\SettingsSpaceKey\SpaceKeyMissingException;
 use Carboneum\CascadeConfig\Model\ImmutableSettingsSpace;
 use Carboneum\CascadeConfig\Source\CascadeSettingsSpace\CascadeArraySource;
 use Carboneum\NestedState\State;
