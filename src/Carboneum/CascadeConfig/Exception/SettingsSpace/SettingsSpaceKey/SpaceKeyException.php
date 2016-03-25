@@ -11,10 +11,10 @@ use Carboneum\CascadeConfig\Exception\SettingsSpace\SpaceException;
  */
 abstract class SpaceKeyException extends SpaceException
 {
-    const CODE = 110;
-    const MESSAGE = 'Error with key %key_name% of space %space_name%';
+    const CODE = self::ERROR_CODE_SPACE_KEY_EXCEPTION;
+    const MESSAGE = 'Error with key {key_name} of space {space_name}';
 
-    const KEY_NAME = '%key_name%';
+    const KEY_NAME = 'key_name';
 
     /**
      * @param string $keyName

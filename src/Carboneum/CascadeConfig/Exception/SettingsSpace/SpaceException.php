@@ -10,10 +10,10 @@ use Carboneum\CascadeConfig\Exception\CascadeConfigException;
  */
 abstract class SpaceException extends CascadeConfigException
 {
-    const CODE = 100;
-    const MESSAGE = 'Error with space %space_name%';
+    const CODE = self::ERROR_CODE_SPACE_EXCEPTION;
+    const MESSAGE = 'Error with space {space_name}';
 
-    const SPACE_NAME = '%space_name%';
+    const SPACE_NAME = 'space_name';
 
     /**
      * @param string $spaceName

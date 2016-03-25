@@ -6,10 +6,10 @@ use Carboneum\CascadeConfig\Exception\CascadeConfigException;
 
 abstract class PathException extends CascadeConfigException
 {
-    const CODE = 300;
-    const MESSAGE = 'Error with file %path%';
+    const CODE = self::ERROR_CODE_PATH_EXCEPTION;
+    const MESSAGE = 'Error with file {path}';
 
-    const FILE_PATH = '%path%';
+    const FILE_PATH = 'path';
 
     /**
      * @param string $spaceName

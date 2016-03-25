@@ -8,6 +8,6 @@ namespace Carboneum\CascadeConfig\Exception\FileSystem;
  */
 class NotDirectoryException extends PathException
 {
-    const CODE = 302;
-    const MESSAGE = 'File %path% is not a directory';
+    const CODE = self::ERROR_CODE_NOT_A_DIRECTORY;
+    const MESSAGE = 'File {path} is not a directory';
 }

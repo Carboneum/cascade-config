@@ -6,6 +6,6 @@ use Carboneum\CascadeConfig\Exception\CascadeConfigException;
 
 class StateIsNotDefined extends CascadeConfigException
 {
-    const CODE = 202;
+    const CODE = self::ERROR_CODE_STATE_IS_NOT_DEFINED;
     const MESSAGE = 'Trying to access state when it is not defined';
 }

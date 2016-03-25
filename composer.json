@@ -4,8 +4,17 @@
   "description": "Library for implement flexible configuration.",
   "homepage": "http://github.com/carboneum/cascade-config",
   "license": "MIT",
-  "authors": [],
+  "authors": [
+    {
+      "name": "Aleksandr Obukhov",
+      "email": "a.a.obukhov@gmail.com"
+    }
+  ],
   "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/carboneum/contextual-exception"
+    },
     {
       "type": "vcs",
       "url": "https://github.com/carboneum/nested-state"
@@ -13,6 +22,7 @@
   ],
   "require": {
     "php": ">=5.5.0",
+    "carboneum/contextual-exception": "*",
     "carboneum/nested-state": "~1.0"
   },
   "require-dev": {

@@ -8,6 +8,6 @@ namespace Carboneum\CascadeConfig\Exception\FileSystem;
  */
 class FileNotFound extends PathException
 {
-    const CODE = 301;
-    const MESSAGE = 'File %path% could not found or is unreadable';
+    const CODE = self::ERROR_CODE_FILE_NOT_FOUND;
+    const MESSAGE = 'File {path} could not found or is unreadable';
 }

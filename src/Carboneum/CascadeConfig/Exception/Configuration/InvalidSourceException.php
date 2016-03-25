@@ -11,10 +11,10 @@ use Carboneum\CascadeConfig\Interfaces\SourceInterface;
  */
 class InvalidSourceException extends CascadeConfigException
 {
-    const CODE = 201;
-    const MESSAGE = 'Configuration source must implement %interface_name%';
+    const CODE = self::ERROR_CODE_INVALID_SOURCE;
+    const MESSAGE = 'Configuration source must implement {interface_name}';
 
-    const INTERFACE_NAME = '%interface_name%';
+    const INTERFACE_NAME = 'interface_name';
 
     /**
      * @param \Exception|null $previous
