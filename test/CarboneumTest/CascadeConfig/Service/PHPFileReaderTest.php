@@ -38,7 +38,7 @@ class PHPFileReaderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param $path
+     * @param string $path
      *
      * @expectedException \Carboneum\CascadeConfig\Exception\FileSystem\FileNotFound
      *

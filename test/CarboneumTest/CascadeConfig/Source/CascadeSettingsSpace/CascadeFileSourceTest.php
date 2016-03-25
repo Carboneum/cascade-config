@@ -8,6 +8,10 @@ use Carboneum\NestedState\Interfaces\ReadableStateInterface;
 use Carboneum\NestedState\State;
 use Prophecy\Argument;
 
+/**
+ * Class CascadeFileSourceTest
+ * @package CarboneumTest\CascadeConfig
+ */
 class CascadeFileSourceTest extends \PHPUnit_Framework_TestCase
 {
 

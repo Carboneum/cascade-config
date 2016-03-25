@@ -6,7 +6,6 @@ use Carboneum\CascadeConfig\Exception\SettingsSpace\SpaceException;
 
 /**
  * Class SpaceKeyException
- *
  * @package Carboneum\CascadeConfig
  */
 abstract class SpaceKeyException extends SpaceException

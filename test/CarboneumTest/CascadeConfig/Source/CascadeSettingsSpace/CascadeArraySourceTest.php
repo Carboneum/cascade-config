@@ -4,6 +4,10 @@ namespace CarboneumTest\CascadeConfig\Source\CascadeSettingsSpace;
 
 use Carboneum\CascadeConfig\Source\CascadeSettingsSpace\CascadeArraySource;
 
+/**
+ * Class CascadeArraySourceTest
+ * @package CarboneumTest\CascadeConfig
+ */
 class CascadeArraySourceTest extends \PHPUnit_Framework_TestCase
 {
     /**

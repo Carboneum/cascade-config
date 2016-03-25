@@ -4,6 +4,10 @@ namespace Carboneum\CascadeConfig\Exception\FileSystem;
 
 use Carboneum\CascadeConfig\Exception\CascadeConfigException;
 
+/**
+ * Class PathException
+ * @package Carboneum\CascadeConfig
+ */
 abstract class PathException extends CascadeConfigException
 {
     const CODE = self::ERROR_CODE_PATH_EXCEPTION;

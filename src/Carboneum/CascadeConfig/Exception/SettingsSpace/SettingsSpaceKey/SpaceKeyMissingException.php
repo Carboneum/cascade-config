@@ -2,6 +2,10 @@
 
 namespace Carboneum\CascadeConfig\Exception\SettingsSpace\SettingsSpaceKey;
 
+/**
+ * Class SpaceKeyMissingException
+ * @package Carboneum\CascadeConfig
+ */
 class SpaceKeyMissingException extends SpaceKeyException
 {
     const CODE = self::ERROR_CODE_SPACE_KEY_MISSING;

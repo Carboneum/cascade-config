@@ -6,6 +6,10 @@ use Carboneum\CascadeConfig\Model\ImmutableSettingsSpace;
 use Carboneum\CascadeConfig\Source\CascadeSettingsSpace\CascadeArraySource;
 use Carboneum\NestedState\State;
 
+/**
+ * Class CascadeSettingsSpaceTest
+ * @package CarboneumTest\CascadeConfig
+ */
 class CascadeSettingsSpaceTest extends \PHPUnit_Framework_TestCase
 {
     /**

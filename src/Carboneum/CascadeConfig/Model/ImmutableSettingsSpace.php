@@ -4,6 +4,10 @@ namespace Carboneum\CascadeConfig\Model;
 
 use Carboneum\CascadeConfig\Interfaces\SettingsSpaceInterface;
 
+/**
+ * Class ImmutableSettingsSpace
+ * @package Carboneum\CascadeConfig
+ */
 class ImmutableSettingsSpace implements SettingsSpaceInterface
 {
     /**

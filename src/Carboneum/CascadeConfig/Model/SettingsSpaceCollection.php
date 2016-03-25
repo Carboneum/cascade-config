@@ -7,6 +7,10 @@ use Carboneum\CascadeConfig\Interfaces\SettingsSpaceInterface;
 use Carboneum\CascadeConfig\Interfaces\StateDependantInterface;
 use Carboneum\NestedState\Interfaces\ReadableStateInterface;
 
+/**
+ * Class SettingsSpaceCollection
+ * @package Carboneum\CascadeConfig
+ */
 class SettingsSpaceCollection
 {
     /**

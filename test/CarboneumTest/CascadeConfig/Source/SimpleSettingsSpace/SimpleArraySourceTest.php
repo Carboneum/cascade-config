@@ -5,6 +5,10 @@ namespace CarboneumTest\CascadeConfig\Source\SimpleSettingsSpace;
 use Carboneum\CascadeConfig\Interfaces\SettingsSpaceInterface;
 use Carboneum\CascadeConfig\Source\SimpleSettingsSpace\SimpleArraySource;
 
+/**
+ * Class SimpleArraySourceTest
+ * @package CarboneumTest\CascadeConfig
+ */
 class SimpleArraySourceTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -27,6 +31,9 @@ class SimpleArraySourceTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(['settings', 'config'], $source->getSettingsSpacesNames());
     }
 
+    /**
+     *
+     */
     public function test()
     {
         $source = new SimpleArraySource(
