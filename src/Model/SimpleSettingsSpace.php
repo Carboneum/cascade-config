@@ -2,7 +2,7 @@
 
 namespace Carboneum\CascadeConfig\Model;
 
-use Carboneum\CascadeConfig\Exception\SettingsSpace\SettingsSpaceKey\SpaceKeyMissingException;
+use Carboneum\CascadeConfig\Exception\SettingsSpaceKey\SpaceKeyMissingException;
 use Carboneum\CascadeConfig\Interfaces\SettingsSpaceInterface;
 
 /**

@@ -144,7 +144,7 @@ class CascadeSettingsSpaceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Carboneum\CascadeConfig\Exception\SettingsSpace\SettingsSpaceKey\SpaceKeyMissingException
+     * @expectedException \Carboneum\CascadeConfig\Exception\SettingsSpaceKey\SpaceKeyMissingException
      */
     public function testException()
     {

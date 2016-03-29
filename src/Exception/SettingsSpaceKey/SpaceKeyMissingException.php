@@ -1,6 +1,6 @@
 <?php
 
-namespace Carboneum\CascadeConfig\Exception\SettingsSpace\SettingsSpaceKey;
+namespace Carboneum\CascadeConfig\Exception\SettingsSpaceKey;
 
 /**
  * Class SpaceKeyMissingException
