@@ -86,6 +86,6 @@ class PHPFileReaderTest extends \PHPUnit_Framework_TestCase
      */
     protected function getTestFilesRoot()
     {
-        return __DIR__ . '/../../test-data/CarboneumTest/CascadeConfig/Service/PHPDirectoryFileReaderTest/';
+        return __DIR__ . '/../../test-data/Service/PHPDirectoryFileReaderTest/';
     }
 }
