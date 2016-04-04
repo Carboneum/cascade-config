@@ -6,4 +6,4 @@
 [![Test Coverage](https://codeclimate.com/github/Carboneum/cascade-config/badges/coverage.svg)](https://codeclimate.com/github/Carboneum/cascade-config/coverage)
 [![Issue Count](https://codeclimate.com/github/Carboneum/cascade-config/badges/issue_count.svg)](https://codeclimate.com/github/Carboneum/cascade-config)
 
-TODO: document
+@TODO: document
